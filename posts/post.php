@@ -1,5 +1,7 @@
 <?php
-include("db_info.php");
+
+include("../Database/db_info.php");
+include("../usable_functions.php");
 
 $user_id = $_GET["user_id"];
 $post_content = $_GET["post"];

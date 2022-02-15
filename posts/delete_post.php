@@ -1,8 +1,9 @@
 <?php
-include("db_info.php");
+
+include("../Database/db_info.php");
+include("../usable_functions.php");
 
 $post_id = $_GET["post_id"];
-
 
 $query = $mySqli ->prepare("DELETE FROM post 
 WHERE ID = ?");

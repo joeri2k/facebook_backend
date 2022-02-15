@@ -1,6 +1,6 @@
 <?php
-include("db_info.php");
-include("usable_functions.php");
+include("../Database/db_info.php");
+include("../usable_functions.php");
 
 if (isset($_GET["search"])){
     $search = $mySqli->real_escape_string($_GET["search"]);

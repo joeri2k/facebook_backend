@@ -1,7 +1,7 @@
 <?php
 
-include("db_info.php");
-include("usable_functions.php");
+include("../Database/db_info.php");
+include("../usable_functions.php");
 
 //check availability of email and pwd
 if(isset($_GET["email"]) && isset($_GET["password"])){

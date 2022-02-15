@@ -1,7 +1,7 @@
 <?php
 
-include("db_info.php");
-include("usable_functions.php");
+include("../Database/db_info.php");
+include("../usable_functions.php");
 
 $my_id = $_GET['my_id'];
 //decryption($user_id)
