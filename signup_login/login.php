@@ -9,7 +9,10 @@ if(isset($_GET["email"]) && isset($_GET["password"])){
     $password = $mySqli->real_escape_string($_GET["password"]);
     $password = hash("sha256", $password);
 } else{
-    die("Your Email or Password are missing."); 
+    $array_response = ["status" => "Your Email or Password are missing."]; 
+    $json_response=json_encode($array_response);
+    echo $json_response;
+    return;
 }
 
 // getting query result
@@ -27,8 +30,7 @@ if($num_rows==0){
 } else{
     $array_response = ["status" => "logged in!"];
     $encrypted_user_id = encryption($id);
-    $array = ["user_id" => $encrypted_user_id];
-    echo json_encode($array);
+    $array_response = ["user_id" => $encrypted_user_id];
 }
 
 $json_response=json_encode($array_response);
