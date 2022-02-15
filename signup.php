@@ -15,4 +15,15 @@ $phone_number=$mySqli->real_escape_string($_GET["phone_number"]);
     die("There's a missing field."); 
 }
 
+$query1=$mySqli ->prepare("SELECT * FROM users WHERE email=? or Phone_number = ? ");
+$query1 ->bind_param("ss", $email, $phone_number);
+$query1 -> execute();
+$query1 -> store_result();
+$num_rows1 = $query1 ->num_rows;
+$query1 ->fetch();
+
+// checking user availability
+if($num_rows1 !=0){
+    die("User already exists please change your email or phone number!");
+}
 ?>
