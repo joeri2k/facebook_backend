@@ -31,4 +31,24 @@ if (checkPasswordStrength($password)){
 } else{
     die ("Password not strong!");
 }
+
+$query=$mySqli ->prepare("INSERT INTO users(first_name,family_name,email,password,Phone_number) VALUES(?,?,?,?,?)");
+$query ->bind_param("sssss", $first_name,$family_name,$email,$password,$phone_number );
+$query -> execute();
+$query -> store_result();
+
+$array_response=[];
+if ($query -> affected_rows == 1){
+    
+    $array_response = ["result" => "successful"];
+
+}
+else {
+    $array_response = ["result" => "unsuccessful"];
+}
+
+$json_response=json_encode($array_response);
+echo $json_response;
+$query ->close();
+$mySqli -> close();
 ?>
