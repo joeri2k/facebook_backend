@@ -26,4 +26,9 @@ $query1 ->fetch();
 if($num_rows1 !=0){
     die("User already exists please change your email or phone number!");
 }
+if (checkPasswordStrength($password)){
+    $password = hash("sha256", $password);
+} else{
+    die ("Password not strong!");
+}
 ?>
