@@ -6,7 +6,7 @@ header("Access-Control-Allow-Origin: *");
 
 $_POST = json_decode(file_get_contents('php://input'), true);
 
-$user_id = $_POST['user_id'];
+$user_id = decryption($_POST['user_id']);
 //decryption($user_id)
 
 $query=$mySqli ->prepare("SELECT users.ID, users.first_name, users.family_name, 
