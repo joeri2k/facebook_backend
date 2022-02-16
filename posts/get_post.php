@@ -36,7 +36,7 @@ $query->bind_result($userID,$firstname,$familyname,$postID,$postcontent,$postDat
 $num_rows = $query ->num_rows;
 
 if($num_rows==0){
-    $array_response["status"]= "Posts not found !";
+    $array_response["status"]= "No Posts";
 } else{
     //iterate over the result retrieving one row at a time 
     $count = 0;
