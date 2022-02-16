@@ -3,6 +3,9 @@ include("../Database/db_info.php");
 include("../usable_functions.php");
 header("Access-Control-Allow-Origin: *");
 
+$_POST = json_decode(file_get_contents('php://input'), true);
+
+
 if (isset($_POST["first_name"]) && isset($_POST["family_name"]) && isset($_POST["email"])  
 && isset($_POST["password"]) && isset($_POST["phone_number"])){
     
@@ -28,14 +31,14 @@ $query1 ->fetch();
 
 // checking user availability
 if($num_rows1 !=0){
-    $array_response = ["error" => "User already exists"]; 
+    $array_response = ["status" => "User already exists"]; 
     $json_response=json_encode($array_response);
     echo $json_response;
     return;
 } else if (checkPasswordStrength($password)){
     $password = hash("sha256", $password);
 } else{
-    $array_response = ["error" => "Password not strong."]; 
+    $array_response = ["status" => "Password not strong."]; 
     $json_response=json_encode($array_response);
     echo $json_response;
     return;
@@ -49,11 +52,11 @@ $query -> store_result();
 $array_response=[];
 if ($query -> affected_rows == 1){
     
-    $array_response = ["result" => "successful"];
+    $array_response = ["status" => "successful"];
 
 }
 else {
-    $array_response = ["result" => "unsuccessful"];
+    $array_response = ["status" => "unsuccessful"];
 }
 
 $json_response=json_encode($array_response);

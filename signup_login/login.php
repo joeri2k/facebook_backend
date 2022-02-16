@@ -19,11 +19,11 @@ if(isset($_POST["email"]) && isset($_POST["password"])){
 }
 
 // getting query result
-$query=$mySqli ->prepare("SELECT ID FROM users WHERE email=? AND password=? ");
+$query=$mySqli ->prepare("SELECT ID, first_name, family_name FROM users WHERE email=? AND password=? ");
 $query ->bind_param("ss", $email, $password);
 $query -> execute();
 $query -> store_result();
-$query->bind_result($id);
+$query->bind_result($id, $first_name, $family_name);
 $num_rows = $query ->num_rows;
 $query ->fetch();
 
@@ -33,7 +33,9 @@ if($num_rows==0){
 } else{
     $encrypted_user_id = encryption($id);
     $array_response = ["status" => "logged in!",
-    "user_id" => $encrypted_user_id];
+    "user_id" => $encrypted_user_id,
+    "first_name" => $first_name,
+    "family_name" => $family_name];
 }
 
 $json_response=json_encode($array_response);
