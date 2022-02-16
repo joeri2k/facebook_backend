@@ -36,16 +36,16 @@ $query->bind_result($userID,$firstname,$familyname,$postID,$postcontent,$postDat
 $num_rows = $query ->num_rows;
 
 if($num_rows==0){
-    $array_response["status"]= "No Posts";
+    $array_response = ["status"=> "No Posts"];
 } else{
     //iterate over the result retrieving one row at a time 
     $count = 0;
     while ($row = $query->fetch())
     {
         //buffer the row onto $data
-        $array_response["result-".$count]= ["first_name" => $firstname,
+        $array_response["result".$count]= ["first_name" => $firstname,
         "family_name" => $familyname,
-        "contentPost" => $postcontent];
+        "content_post" => $postcontent];
         $count = $count + 1;
 
     }
