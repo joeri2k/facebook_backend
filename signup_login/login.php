@@ -1,15 +1,18 @@
 <?php
 
+header("Access-Control-Allow-Origin: *");
 include("../Database/db_info.php");
 include("../usable_functions.php");
 
 //check availability of email and pwd
-if(isset($_GET["email"]) && isset($_GET["password"])){
-    $email= $mySqli->real_escape_string($_GET["email"] );
-    $password = $mySqli->real_escape_string($_GET["password"]);
+$_POST = json_decode(file_get_contents('php://input'), true);
+
+if(isset($_POST["email"]) && isset($_POST["password"])){
+    $email= $mySqli->real_escape_string($_POST["email"] );
+    $password = $mySqli->real_escape_string($_POST["password"]);
     $password = hash("sha256", $password);
 } else{
-    $array_response = ["status" => "Your Email or Password are missing."]; 
+    $array_response = ["error" => "Your Email or Password are missing."]; 
     $json_response=json_encode($array_response);
     echo $json_response;
     return;
@@ -28,9 +31,9 @@ $query ->fetch();
 if($num_rows==0){
     $array_response = ["status" => "Email or Password is incorrect !"];
 } else{
-    $array_response = ["status" => "logged in!"];
     $encrypted_user_id = encryption($id);
-    $array_response = ["user_id" => $encrypted_user_id];
+    $array_response = ["status" => "logged in!",
+    "user_id" => $encrypted_user_id];
 }
 
 $json_response=json_encode($array_response);

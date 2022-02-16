@@ -1,5 +1,5 @@
 <?php
-
+header("Access-Control-Allow-Origin: *");
 function encryption($id){
     $ecrypt_id_1 = str_replace(['1','5','9'], ['%','#','$'],((($id+2022)*975318642)-2000));
     $ecrypt_id_2 = base64_encode($ecrypt_id_1);
