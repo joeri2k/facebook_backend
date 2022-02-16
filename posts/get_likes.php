@@ -2,16 +2,19 @@
 
 include("../Database/db_info.php");
 include("../usable_functions.php");
+header("Access-Control-Allow-Origin: *");
 
-$post_id = $_GET['post_id'];
+$_POST = json_decode(file_get_contents('php://input'), true);
+
+$post_id = $_POST['post_id'];
 //decryption($user_id)
 
 
 $query=$mySqli ->prepare("SELECT COUNT(*) FROM likes
 LEFT JOIN post ON likes.Post_ID =  post.ID
-WHERE post.ID = 41");
+WHERE post.ID = ?");
 
-//$query ->bind_param("s", $post_id);
+$query ->bind_param("s", $post_id);
 $query -> execute();
 $query -> store_result();
 $query->bind_result($number_likes);

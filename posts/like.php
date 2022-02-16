@@ -2,6 +2,10 @@
 
 include("../Database/db_info.php");
 include("../usable_functions.php");
+header("Access-Control-Allow-Origin: *");
+
+$_POST = json_decode(file_get_contents('php://input'), true);
+$user_id = decryption($_POST['user_id']);
 
 $user_id = $_GET["user_id"];
 $post_id = $_GET["post_id"];

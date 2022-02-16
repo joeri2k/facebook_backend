@@ -44,7 +44,8 @@ if($num_rows==0){
         //buffer the row onto $data
         $array_response["result".$count]= ["first_name" => $firstname,
         "family_name" => $familyname,
-        "content_post" => $postcontent];
+        "content_post" => $postcontent,
+        "post_id" => $postID];
         $count = $count + 1;
 
     }
