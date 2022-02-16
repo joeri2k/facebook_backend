@@ -13,7 +13,10 @@ $password=$mySqli->real_escape_string($_POST["password"]);
 $phone_number=$mySqli->real_escape_string($_POST["phone_number"]);
 
 } else{
-    die("There's a missing field."); 
+    $array_response = ["error" => "There's a missing field."]; 
+    $json_response=json_encode($array_response);
+    echo $json_response;
+    return;
 }
 
 $query1=$mySqli ->prepare("SELECT * FROM users WHERE email=? or Phone_number = ? ");
@@ -25,12 +28,17 @@ $query1 ->fetch();
 
 // checking user availability
 if($num_rows1 !=0){
-    die("User already exists please change your email or phone number!");
-}
-if (checkPasswordStrength($password)){
+    $array_response = ["error" => "User already exists"]; 
+    $json_response=json_encode($array_response);
+    echo $json_response;
+    return;
+} else if (checkPasswordStrength($password)){
     $password = hash("sha256", $password);
 } else{
-    die ("Password not strong!");
+    $array_response = ["error" => "Password not strong."]; 
+    $json_response=json_encode($array_response);
+    echo $json_response;
+    return;
 }
 
 $query=$mySqli ->prepare("INSERT INTO users(first_name,family_name,email,password,Phone_number) VALUES(?,?,?,?,?)");
