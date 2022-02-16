@@ -5,7 +5,6 @@ include("../usable_functions.php");
 header("Access-Control-Allow-Origin: *");
 
 $_POST = json_decode(file_get_contents('php://input'), true);
-
 $user_id = decryption($_POST['user_id']);
 //decryption($user_id)
 
@@ -27,7 +26,7 @@ post.ID,post.content_of_Post, post.Date_of_Post
 FROM post
 Inner Join users On post.Users_ID = users.ID
 Where  users.ID = ?
-ORDER BY Date_of_Post DESC");
+ORDER BY Date_of_Post");
 
 $query ->bind_param("sss", $user_id,$user_id, $user_id);
 $query -> execute();

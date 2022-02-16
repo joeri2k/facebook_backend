@@ -7,12 +7,10 @@ header("Access-Control-Allow-Origin: *");
 $_POST = json_decode(file_get_contents('php://input'), true);
 $user_id = decryption($_POST['user_id']);
 
-$user_id = $_POST["user_id"];
 $post_content = $_POST["post_content"];
 $date0 = $_POST["date"];
 $date1 = strtotime($date0);
 $date = date("Y-m-d H:i:s",$date1);
-echo $date;
 
 // getting query result
 $query=$mySqli ->prepare("INSERT INTO post(Users_ID,content_of_Post,Date_of_Post) VALUES(?,?,?)");
@@ -24,11 +22,11 @@ $query ->get_result();
 // print_r($query);
 $array_response=[];
 if ($query -> affected_rows==1){
-    $array_response = ["response" => "successful"];
+    $array_response = ["status" => "successful"];
 
 }
 else {
-    $array_response = ["response" => "unsuccessful"];
+    $array_response = ["status" => "unsuccessful"];
 }
 
 
