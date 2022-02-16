@@ -2,10 +2,14 @@
 
 include("../Database/db_info.php");
 include("../usable_functions.php");
+header("Access-Control-Allow-Origin: *");
 
-$user_id = $_GET["user_id"];
-$post_content = $_GET["post"];
-$date0 = $_GET["date"];
+$_POST = json_decode(file_get_contents('php://input'), true);
+$user_id = decryption($_POST['user_id']);
+
+$user_id = $_POST["user_id"];
+$post_content = $_POST["post_content"];
+$date0 = $_POST["date"];
 $date1 = strtotime($date0);
 $date = date("Y-m-d H:i:s",$date1);
 echo $date;
@@ -20,11 +24,11 @@ $query ->get_result();
 // print_r($query);
 $array_response=[];
 if ($query -> affected_rows==1){
-    $array_response = ["result" => "successful"];
+    $array_response = ["response" => "successful"];
 
 }
 else {
-    $array_response = ["result" => "unsuccessful"];
+    $array_response = ["response" => "unsuccessful"];
 }
 
 
