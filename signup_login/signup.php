@@ -1,15 +1,16 @@
 <?php
 include("../Database/db_info.php");
 include("../usable_functions.php");
+header("Access-Control-Allow-Origin: *");
 
-if (isset($_GET["first_name"]) && isset($_GET["family_name"]) && isset($_GET["email"])  
-&& isset($_GET["password"]) && isset($_GET["phone_number"])){
+if (isset($_POST["first_name"]) && isset($_POST["family_name"]) && isset($_POST["email"])  
+&& isset($_POST["password"]) && isset($_POST["phone_number"])){
     
-$first_name=$mySqli->real_escape_string($_GET["first_name"]); // filter
-$family_name=$mySqli->real_escape_string($_GET["family_name"]);
-$email=$mySqli->real_escape_string($_GET["email"]);
-$password=$mySqli->real_escape_string($_GET["password"]);
-$phone_number=$mySqli->real_escape_string($_GET["phone_number"]);
+$first_name=$mySqli->real_escape_string($_POST["first_name"]); // filter
+$family_name=$mySqli->real_escape_string($_POST["family_name"]);
+$email=$mySqli->real_escape_string($_POST["email"]);
+$password=$mySqli->real_escape_string($_POST["password"]);
+$phone_number=$mySqli->real_escape_string($_POST["phone_number"]);
 
 } else{
     die("There's a missing field."); 
