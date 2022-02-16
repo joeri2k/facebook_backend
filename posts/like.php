@@ -7,8 +7,8 @@ header("Access-Control-Allow-Origin: *");
 $_POST = json_decode(file_get_contents('php://input'), true);
 $user_id = decryption($_POST['user_id']);
 
-$user_id = $_GET["user_id"];
-$post_id = $_GET["post_id"];
+$user_id = $_POST["user_id"];
+$post_id = $_POST["post_id"];
 
 $query1=$mySqli ->prepare("SELECT * FROM likes WHERE User_ID = ? and Post_ID = ? ");
 $query1 ->bind_param("ss", $user_id, $post_id);
@@ -32,11 +32,11 @@ $query ->get_result();
 // print_r($query);
 $array_response=[];
 if ($query -> affected_rows==1){
-    $array_response = ["result" => "successful"];
+    $array_response = ["status" => "successful"];
 
 }
 else {
-    $array_response = ["result" => "unsuccessful"];
+    $array_response = ["status" => "unsuccessful"];
 }
 
 

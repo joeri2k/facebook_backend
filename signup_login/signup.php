@@ -6,10 +6,10 @@ header("Access-Control-Allow-Origin: *");
 $_POST = json_decode(file_get_contents('php://input'), true);
 
 
-if (isset($_POST["first_name"]) && isset($_POST["family_name"]) && isset($_POST["email"])  
+if (isset($_POST["name"]) && isset($_POST["family_name"]) && isset($_POST["email"])  
 && isset($_POST["password"]) && isset($_POST["phone_number"])){
     
-$first_name=$mySqli->real_escape_string($_POST["first_name"]); // filter
+$first_name=$mySqli->real_escape_string($_POST["name"]); // filter
 $family_name=$mySqli->real_escape_string($_POST["family_name"]);
 $email=$mySqli->real_escape_string($_POST["email"]);
 $password=$mySqli->real_escape_string($_POST["password"]);
