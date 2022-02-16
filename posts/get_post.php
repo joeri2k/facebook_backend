@@ -2,8 +2,11 @@
 
 include("../Database/db_info.php");
 include("../usable_functions.php");
+header("Access-Control-Allow-Origin: *");
 
-$user_id = $_GET['user_id'];
+$_POST = json_decode(file_get_contents('php://input'), true);
+
+$user_id = $_POST['user_id'];
 //decryption($user_id)
 
 $query=$mySqli ->prepare("SELECT users.ID, users.first_name, users.family_name, 
@@ -33,7 +36,7 @@ $query->bind_result($userID,$firstname,$familyname,$postID,$postcontent,$postDat
 $num_rows = $query ->num_rows;
 
 if($num_rows==0){
-    $array_response["status"]= "Friends not found !";
+    $array_response["status"]= "Posts not found !";
 } else{
     //iterate over the result retrieving one row at a time 
     $count = 0;
