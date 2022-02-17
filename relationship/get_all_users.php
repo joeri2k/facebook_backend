@@ -7,17 +7,13 @@ header("Access-Control-Allow-Origin: *");
 $_POST = json_decode(file_get_contents('php://input'), true);
 $user_id = decryption($_POST['user_id']); //decryption($user_id)
 
+// SELECT ID from users WHERE ID != 12 AND ID NOT IN ((SELECT Users_sent_ID from friends where Users_recieved_ID=12) AND (SELECT Users_recieved_ID from friends where Users_sent_ID=12)); 
+$query=$mySqli ->prepare("SELECT ID, first_name, family_name from users 
+WHERE ID != ? AND ID 
+NOT IN ((SELECT Users_sent_ID from friends where Users_sent_ID=? OR Users_recieved_ID=?) 
+AND  (SELECT Users_recieved_ID from friends where Users_recieved_ID=? OR Users_sent_ID=?))");
 
-$query=$mySqli ->prepare("SELECT ID, first_name, family_name FROM users 
-WHERE ID != (SELECT ID FROM users 
-LEFT JOIN friends F ON U.ID = F.Users_recieved_ID 
-WHERE (F.Users_sent_ID = ? AND F.Status_of_Request = 'confirmed')
-UNION 
-SELECT U.ID, U.first_name, U.family_name FROM users U 
-LEFT JOIN friends F ON U.ID = F.Users_sent_ID 
-WHERE (F.Users_recieved_ID = ? AND F.Status_of_Request = 'confirmed'))");
-
-$query ->bind_param("ss", $user_id, $user_id);
+$query ->bind_param("sssss", $user_id, $user_id,$user_id, $user_id,$user_id);
 $query -> execute();
 $query -> store_result();
 $query->bind_result($user_id, $user_first_name,$user_family_name);
