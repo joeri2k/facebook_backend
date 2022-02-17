@@ -3,9 +3,8 @@
 include("../Database/db_info.php");
 include("../usable_functions.php");
 
-$user_id = $_GET['user_id'];
-//decryption($user_id)
-
+$_POST = json_decode(file_get_contents('php://input'), true);
+$user_id = decryption($_POST['user_id']); //decryption($user_id)
 
 $query=$mySqli ->prepare("SELECT U.ID, U.first_name, U.family_name FROM users U 
 LEFT JOIN friends F ON U.ID = F.Users_recieved_ID 
