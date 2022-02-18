@@ -9,11 +9,10 @@ $user_id = decryption($_POST['user_id']); //decryption($user_id)
 
 // SELECT ID from users WHERE ID != 12 AND ID NOT IN ((SELECT Users_sent_ID from friends where Users_recieved_ID=12) AND (SELECT Users_recieved_ID from friends where Users_sent_ID=12)); 
 $query=$mySqli ->prepare("SELECT ID, first_name, family_name from users 
-WHERE ID != ? AND ID 
-NOT IN ((SELECT Users_sent_ID from friends where Users_sent_ID=? OR Users_recieved_ID=?) 
-AND  (SELECT Users_recieved_ID from friends where Users_recieved_ID=? OR Users_sent_ID=?))");
+WHERE ID != ? AND ID NOT IN (SELECT Users_sent_ID from friends where Users_recieved_ID=? 
+UNION SELECT Users_recieved_ID from friends where Users_sent_ID=?); ");
 
-$query ->bind_param("sssss", $user_id, $user_id,$user_id, $user_id,$user_id);
+$query ->bind_param("sss", $user_id, $user_id,$user_id);
 $query -> execute();
 $query -> store_result();
 $query->bind_result($user_id, $user_first_name,$user_family_name);
